@@ -81,6 +81,12 @@ functions:
 functionsx:
 	./rat functions.rat
 
+dictionary:
+	cat avl.rat
+
+dictionaryx:
+	./rat avl.rat
+
 problem:
 	cat problem.rat
 
