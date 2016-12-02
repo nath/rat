@@ -11,8 +11,12 @@ Lexeme *eval(Lexeme *pt, Lexeme *env) {
     if (pt->type == NUMBER || pt->type == STRING)
         return pt;
 
-    if (pt->type == ID)
-        return lookupEnv(env, pt);
+    if (pt->type == ID) {
+        Lexeme *result = lookupEnv(env, pt);
+        if (result->type == DELAY)
+            return eval(cdr(result), car(result));
+        return result;
+    }
 
     if (pt->type == PLUS)
         return evalPlus(pt, env);
@@ -40,6 +44,9 @@ Lexeme *eval(Lexeme *pt, Lexeme *env) {
 
     if (pt->type == NOT)
         return evalNot(pt, env);
+
+    if (pt->type == DELAY)
+        return eval(cdr(pt), car(pt));
 
     if (pt->type == GT)
         return evalGt(pt, env);
@@ -88,7 +95,7 @@ Lexeme *evalPlus(Lexeme *pt, Lexeme *env) {
         return result;
     }
 
-    fatalError("Can only add numbers\n");
+    fatalError("Can only add numbers, %s, %s\n", left->type, right->type);
     return NULL;
 }
 
@@ -307,7 +314,13 @@ Lexeme *evalArgs(Lexeme *pt, Lexeme *env) {
     if (pt == NULL)
         return NULL;
 
-    return cons(CONS, eval(car(pt), env), evalArgs(cdr(pt), env));
+    Lexeme *earg = car(pt);
+    if (earg->type != DELAY)
+        earg = eval(earg, env);
+    else
+        setCar(earg, env);
+
+    return cons(CONS, earg, evalArgs(cdr(pt), env));
 }
 
 int isTrue(Lexeme *l) {

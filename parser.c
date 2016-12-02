@@ -157,6 +157,10 @@ Lexeme* unary(Parser *p) {
         Lexeme *l = match(p, MINUS);
         l->right = unary(p);
         return l;
+    } else if (check(p, DELAY)) {
+        Lexeme *l = match(p, DELAY);
+        l->right = unary(p);
+        return l;
     } else {
         Lexeme *l = match(p, NOT);
         l->right = unary(p);
@@ -166,7 +170,7 @@ Lexeme* unary(Parser *p) {
 
 int unaryPending(Parser *p) {
     return check(p, NUMBER) || check(p, STRING) || variablePending(p) || check(p, OPAREN)
-        || check(p, MINUS) || check(p, NOT);
+        || check(p, MINUS) || check(p, NOT) || check(p, DELAY);
 }
 
 Lexeme* variable(Parser *p) {
@@ -303,7 +307,8 @@ int functionDefPending(Parser *p) {
 Lexeme* idList(Parser *p) {
     Lexeme *l, *r = NULL;
     l = match(p, ID);
-    if (idListPending(p)) {
+    if (check(p, COMMA)) {
+        match(p, COMMA);
         r = idList(p);
     }
     return cons(ID_LIST, l, r);

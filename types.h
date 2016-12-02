@@ -18,6 +18,7 @@ extern const char *EQUALS;
 extern const char *AND;
 extern const char *OR;
 extern const char *NOT;
+extern const char *DELAY;
 extern const char *GT;
 extern const char *LT;
 extern const char *GTE;

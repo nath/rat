@@ -56,6 +56,9 @@ Lexeme* lex(Parser *p) {
         case '!':
             return newLexeme(NOT);
             break;
+        case '@':
+            return newLexeme(DELAY);
+            break;
         case '>':
             ch = getChar(p);
             if (ch == '=') {

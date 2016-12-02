@@ -16,6 +16,7 @@ const char *EQUALS = "EQUALS";
 const char *AND = "AND";
 const char *OR = "OR";
 const char *NOT = "NOT";
+const char *DELAY = "DELAY";
 const char *GT = "GREATER THAN";
 const char *LT = "LESS THAN";
 const char *GTE = "GREATER THAN OR EQUAL TO";

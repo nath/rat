@@ -1,12 +1,13 @@
-def fact(n) {
-    if (n == 0)
-        1;
-    else
-        n*fact(n-1);
+def test(n) {
+    def incr(z) {
+        squeekln(n);
+        n = n+1;
+    }
 }
 
-var i = 1;
-while (i <= 10) {
-    squeekln("fact(",i,") is ", fact(i));
-    i = i + 1;
+var x = test(5);
+var i = 0;
+while (i<10) {
+    x(2);
+    i = i+1;
 }
