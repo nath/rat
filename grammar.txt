@@ -11,6 +11,7 @@ statement           : expression SEMI
 
 expression          : unary
                     | unary operator expression
+                    | lambda
 
 operator            : PLUS
                     | MINUS
@@ -61,6 +62,8 @@ whileLoop           : WHILE conditional block
 variableDef         : VAR variable ASSIGN expression SEMI
 
 functionDef         : DEF variable OPAREN optIdList CPAREN block
+
+lambda              : LAMBDA OPAREN optIdList CPAREN block
 
 optIdList           : *empty*
                     | idList

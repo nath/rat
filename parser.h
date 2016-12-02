@@ -49,6 +49,8 @@ Lexeme *variableDef(Parser *p);
 int variableDefPending(Parser *p);
 Lexeme *functionDef(Parser *p);
 int functionDefPending(Parser *p);
+Lexeme *lambda(Parser *p);
+int lambdaPending(Parser *p);
 Lexeme *optIdList(Parser *p);
 Lexeme *idList(Parser *p);
 int idListPending(Parser *p);

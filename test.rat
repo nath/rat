@@ -1,8 +1,1 @@
-def test(n) {
-    def incr() {
-        squeekln(n);
-        n = n+1;
-    }
-}
-
-(test(5))();
+(lambda(x)squeekln("lambda works, x is ", x);)(5);

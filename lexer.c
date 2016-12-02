@@ -184,6 +184,8 @@ Lexeme* lexID(char ch, Parser *p) {
         l->type = DEF;
     } else if (strcmp(buf, "var") == 0) {
         l->type = VAR;
+    } else if (strcmp(buf, "lambda") == 0) {
+        l->type = LAMBDA;
     } else {
         l->sval = malloc(strlen(buf) + 1);
         strcpy(l->sval, buf);

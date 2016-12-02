@@ -30,6 +30,7 @@ extern const char *WHILE;
 extern const char *IF;
 extern const char *ELSE;
 extern const char *DEF;
+extern const char *LAMBDA;
 extern const char *VAR;
 extern const char *CONS;
 extern const char *FN_CALL;

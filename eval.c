@@ -72,6 +72,9 @@ Lexeme *eval(Lexeme *pt, Lexeme *env) {
     if (pt->type == DEF)
         return evalFuncDef(pt, env);
 
+    if (pt->type == LAMBDA)
+        return evalLambda(pt, env);
+
     if (pt->type == VAR)
         return evalVarDef(pt, env);
 
@@ -280,6 +283,10 @@ Lexeme *evalIf(Lexeme *pt, Lexeme *env) {
 
 Lexeme *evalFuncDef(Lexeme *pt, Lexeme *env) {
     return insertEnv(env, car(pt), cons(CLOSURE, env, cdr(pt)));
+}
+
+Lexeme *evalLambda(Lexeme *pt, Lexeme *env) {
+    return cons(CLOSURE, env, cdr(pt));
 }
 
 Lexeme *evalVarDef(Lexeme *pt, Lexeme *env) {

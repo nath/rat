@@ -87,6 +87,9 @@ int statementPending(Parser *p) {
 }
 
 Lexeme *expression(Parser *p) {
+    if (lambdaPending(p))
+        return lambda(p);
+
     Lexeme *l = unary(p);
     if (operatorPending(p)) {
         Lexeme *op, *r;
@@ -100,7 +103,7 @@ Lexeme *expression(Parser *p) {
 }
 
 int expressionPending(Parser *p) {
-    return unaryPending(p);
+    return unaryPending(p) || lambdaPending(p);
 }
 
 Lexeme *operator(Parser *p) {
@@ -306,6 +309,23 @@ Lexeme *functionDef(Parser *p) {
 
 int functionDefPending(Parser *p) {
     return check(p, DEF);
+}
+
+Lexeme *lambda(Parser *p) {
+    Lexeme *l, *r, *params, *body;
+    l = match(p, LAMBDA);
+    l->left = NULL;
+    match(p, OPAREN);
+    params = optIdList(p);
+    match(p, CPAREN);
+    body = block(p);
+    r = cons(CONS, params, body);
+    l->right = r;
+    return l;
+}
+
+int lambdaPending(Parser *p) {
+    return check(p, LAMBDA);
 }
 
 Lexeme *optIdList(Parser *p) {

@@ -1,5 +1,5 @@
 #include "types.h"
-const char *SYMBOLS = ";(){},.+-*/&|!<>\"=";
+const char *SYMBOLS = ";(){},.+-*/&|!<>\"=@";
 
 const char *SEMI = "SEMICOLON";
 const char *OPAREN = "OPEN PARENTHESIS";
@@ -28,6 +28,7 @@ const char *WHILE = "WHILE";
 const char *IF = "IF";
 const char *ELSE = "ELSE";
 const char *DEF = "DEF";
+const char *LAMBDA = "LAMBDA";
 const char *VAR = "VAR";
 const char *CONS = "CONS";
 const char *FN_CALL = "FN CALL";

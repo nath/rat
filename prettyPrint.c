@@ -58,6 +58,19 @@ void prettyPrint(Lexeme *pt, int depth) {
         prettyPrint(pt->right->right, depth+1);
         indent(depth);
         printf("}");
+    } else if (pt->type == LAMBDA) {
+        printf("lambda (");
+        prettyPrint(pt->right->left, 0);
+        printf(") ");
+        if (pt->right->right->type == STATEMENT_LIST) {
+            printf("{\n");
+            prettyPrint(pt->right->right, depth+1);
+            indent(depth);
+            printf("}");
+        } else {
+            prettyPrint(pt->right->right, 0);
+            printf(";");
+        }
     } else if (pt->type == IF) {
         printf("if (");
         prettyPrint(pt->left->left, 0);

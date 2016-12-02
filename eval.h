@@ -20,6 +20,7 @@ Lexeme *evalLte(Lexeme *pt, Lexeme *env);
 Lexeme *evalWhile(Lexeme *pt, Lexeme *env);
 Lexeme *evalIf(Lexeme *pt, Lexeme *env);
 Lexeme *evalFuncDef(Lexeme *pt, Lexeme *env);
+Lexeme *evalLambda(Lexeme *pt, Lexeme *env);
 Lexeme *evalVarDef(Lexeme *pt, Lexeme *env);
 Lexeme *evalStatementList(Lexeme *pt, Lexeme *env);
 Lexeme *evalFuncCall(Lexeme *pt, Lexeme *env);
