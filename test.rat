@@ -1,1 +1,8 @@
-(lambda(x)squeekln("lambda works, x is ", x);)(5);
+def obj(n) {
+    this;
+}
+
+var x = obj(5);
+squeekln(x.n);
+x.n = 6;
+squeekln(x.n);

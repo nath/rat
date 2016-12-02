@@ -12,6 +12,9 @@ Lexeme *eval(Lexeme *pt, Lexeme *env) {
         return pt;
 
     if (pt->type == ID) {
+        if (!strcmp(pt->sval, "this"))
+            return env;
+
         Lexeme *result = lookupEnv(env, pt);
         if (result->type == DELAY)
             return eval(cdr(result), car(result));
@@ -59,6 +62,9 @@ Lexeme *eval(Lexeme *pt, Lexeme *env) {
 
     if (pt->type == LTE)
         return evalLte(pt, env);
+
+    if (pt->type == DOT)
+        return evalDot(pt, env);
 
     if (pt->type == OPAREN)
         return eval(cdr(pt), env);
@@ -169,7 +175,12 @@ Lexeme *evalEquals(Lexeme *pt, Lexeme *env) {
 Lexeme *evalAssign(Lexeme *pt, Lexeme *env) {
     Lexeme *id = car(pt);
     Lexeme *val = eval(cdr(pt), env);
-    updateEnv(env, id, val);
+    if (id->type == DOT) {
+        Lexeme *obj = eval(car(id), env);
+        updateEnv(obj, cdr(id), val);
+    } else {
+        updateEnv(env, id, val);
+    }
     return val;
 }
 
@@ -260,6 +271,16 @@ Lexeme *evalLte(Lexeme *pt, Lexeme *env) {
     }
 
     fatalError("Can only divide numbers\n");
+    return NULL;
+}
+
+Lexeme *evalDot(Lexeme *pt, Lexeme *env) {
+    Lexeme *left = eval(car(pt), env);
+    if (left->type == ENV) {
+        return lookupEnv(left, cdr(pt));
+    }
+
+    fatalError("Can only use dot on environments\n");
     return NULL;
 }
 
