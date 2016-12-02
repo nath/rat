@@ -140,6 +140,10 @@ void prettyPrint(Lexeme *pt, int depth) {
         prettyPrint(pt->left, 0);
         printf("==");
         prettyPrint(pt->right, 0);
+    } else if (pt->type == ASSIGN) {
+        prettyPrint(pt->left, 0);
+        printf("=");
+        prettyPrint(pt->right, 0);
     } else if (pt->type == AND) {
         prettyPrint(pt->left, 0);
         printf("&");
