@@ -51,19 +51,13 @@ def tree(key, value) {
                 }
                 if ((!(y == nil)) & (((y == p.right) & (p == par.left)) | ((y == p.left) & (p == par.right)))) {
                     if ((y == p.right) & (p == par.left)) {
-                        if (par == root) {
-                            root = y;
-                        } else if (par == par.parent.left) {
-                            par.parent.left = y;
-                        } else {
-                            par.parent.right = y;
-                        }
-                        y.parent = par.parent;
-                        y.right = p;
+                        par.left = y;
+                        y.parent = par;
+                        p.right = y.left;
+                        if (!(y.left == nil))
+                            y.left.parent = p;
+                        y.left = p;
                         p.parent = y;
-                        p.right = par;
-                        par.parent = p;
-                    } else {
                         if (par == root) {
                             root = y;
                         } else if (par == par.parent.left) {
@@ -73,10 +67,33 @@ def tree(key, value) {
                             par.parent.right = y;
                         }
                         y.parent = par.parent;
-                        y.left = p;
+                        par.left = y.right;
+                        if (!(y.right == nil))
+                            y.right.parent = par;
+                        y.right = par;
+                        par.parent = y;
+                    } else {
+                        par.right = y;
+                        y.parent = par;
+                        p.left = y.right;
+                        if (!(y.right == nil))
+                            y.right.parent = p;
+                        y.right = p;
                         p.parent = y;
-                        p.left = par;
-                        par.parent = p;
+                        if (par == root) {
+                            root = y;
+                        } else if (par == par.parent.left) {
+                            par.parent.left = y;
+                            y.parent = par.parent;
+                        } else {
+                            par.parent.right = y;
+                        }
+                        y.parent = par.parent;
+                        par.right = y.left;
+                        if (!(y.left == nil))
+                            y.left.parent = par;
+                        y.left = par;
+                        par.parent = y;
                     }
                     setBalance(p);
                     setBalance(par);
