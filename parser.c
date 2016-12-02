@@ -149,6 +149,11 @@ Lexeme *unary(Parser *p) {
         if (argsPending(p)) {
             Lexeme *r = args(p);
             return cons(FN_CALL, l, r);
+        } else if (check(p, OBRACKET)) {
+            match(p, OBRACKET);
+            Lexeme *r = unary(p);
+            match(p, CBRACKET);
+            return cons(ARRGET, l, r);
         }
         return l;
     } else if (check(p, OPAREN)) {

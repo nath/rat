@@ -6,6 +6,7 @@ typedef struct Lexeme {
 
     char *sval;
     int ival;
+    struct Lexeme **arr;
 
     struct Lexeme *(*fp)(struct Lexeme *);
 

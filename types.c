@@ -1,11 +1,13 @@
 #include "types.h"
-const char *SYMBOLS = ";(){},.+-*/&|!<>\"=@";
+const char *SYMBOLS = ";(){}[],.+-*/&|!<>\"=@";
 
 const char *SEMI = "SEMICOLON";
 const char *OPAREN = "OPEN PARENTHESIS";
 const char *CPAREN = "CLOSE PARENTHESIS";
 const char *OBRACE = "OPEN BRACE";
 const char *CBRACE = "CLOSE BRACE";
+const char *OBRACKET = "OPEN BRACKET";
+const char *CBRACKET = "CLOSE BRACKET";
 const char *COMMA = "COMMA";
 const char *DOT = "DOT";
 const char *PLUS = "PLUS";
@@ -32,6 +34,7 @@ const char *LAMBDA = "LAMBDA";
 const char *VAR = "VAR";
 const char *CONS = "CONS";
 const char *FN_CALL = "FN CALL";
+const char *ARRGET = "ARRGET";
 const char *STATEMENT_LIST = "STATEMENT LIST";
 const char *EXPRESSION_LIST = "EXPRESSION LIST";
 const char *ID_LIST = "ID LIST";
@@ -39,6 +42,7 @@ const char *ID_LIST = "ID LIST";
 const char *STRING = "STRING";
 const char *NUMBER = "NUMBER";
 const char *ID = "ID";
+const char *ARRAY = "ARRAY";
 const char *BUILTIN = "BUILTIN";
 
 const char *ENV = "ENV";

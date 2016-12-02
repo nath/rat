@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "env.h"
@@ -14,6 +15,7 @@ void installBuiltins(Lexeme *env);
 
 Lexeme *squeek(Lexeme *args);
 Lexeme *squeekln(Lexeme *args);
+Lexeme *array(Lexeme *args);
 
 int main(int argc, char *argv[]) {
     Parser *p = newParser(argv[1]);
@@ -43,6 +45,12 @@ void installBuiltins(Lexeme *env) {
     val = newLexeme(BUILTIN);
     val->fp = squeekln;
     insertEnv(env, var, val);
+
+    var = newLexeme(ID);
+    var->sval = "array";
+    val = newLexeme(BUILTIN);
+    val->fp = array;
+    insertEnv(env, var, val);
 }
 
 Lexeme *squeek(Lexeme *args) {
@@ -64,5 +72,21 @@ Lexeme *squeek(Lexeme *args) {
 Lexeme *squeekln(Lexeme *args) {
     Lexeme *result = squeek(args);
     printf("\n");
+    return result;
+}
+
+Lexeme *array(Lexeme *args) {
+    if (args == NULL || cdr(args) != NULL) {
+        fatalError("Incorrect number of arguments to array()\n");
+    }
+
+    Lexeme *size = car(args);
+    if (size->type != NUMBER || size->ival <= 0) {
+        fatalError("Argument to array() must be a number > 0\n");
+    }
+
+    Lexeme *result = newLexeme(ARRAY);
+    result->ival = size->ival;
+    result->arr = malloc(size->ival * sizeof(Lexeme *));
     return result;
 }

@@ -18,6 +18,7 @@ Lexeme *evalLt(Lexeme *pt, Lexeme *env);
 Lexeme *evalGte(Lexeme *pt, Lexeme *env);
 Lexeme *evalLte(Lexeme *pt, Lexeme *env);
 Lexeme *evalDot(Lexeme *pt, Lexeme *env);
+Lexeme *evalArrGet(Lexeme *pt, Lexeme *env);
 Lexeme *evalWhile(Lexeme *pt, Lexeme *env);
 Lexeme *evalIf(Lexeme *pt, Lexeme *env);
 Lexeme *evalFuncDef(Lexeme *pt, Lexeme *env);

@@ -120,6 +120,11 @@ void prettyPrint(Lexeme *pt, int depth) {
         prettyPrint(pt->left, 0);
         printf(".");
         prettyPrint(pt->right, 0);
+    } else if (pt->type == ARRGET) {
+        prettyPrint(pt->left, 0);
+        printf("[");
+        prettyPrint(pt->right, 0);
+        printf("]");
     } else if (pt->type == PLUS) {
         prettyPrint(pt->left, 0);
         printf("+");

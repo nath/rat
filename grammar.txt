@@ -29,6 +29,7 @@ operator            : PLUS
 unary               : NUMBER
                     | STRING
                     | variable
+                    | variable OBRACKET unary CBRACKET
                     | OPAREN expression CPAREN
                     | MINUS unary
                     | NOT unary

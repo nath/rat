@@ -66,6 +66,9 @@ Lexeme *eval(Lexeme *pt, Lexeme *env) {
     if (pt->type == DOT)
         return evalDot(pt, env);
 
+    if (pt->type == ARRGET)
+        return evalArrGet(pt, env);
+
     if (pt->type == OPAREN)
         return eval(cdr(pt), env);
 
@@ -178,6 +181,19 @@ Lexeme *evalAssign(Lexeme *pt, Lexeme *env) {
     if (id->type == DOT) {
         Lexeme *obj = eval(car(id), env);
         updateEnv(obj, cdr(id), val);
+    } else if (id->type == ARRGET) {
+        Lexeme *arr = eval(car(id), env);
+        if (arr->type != ARRAY) {
+            fatalError("Can't access sub-element of non-array.\n");
+        }
+        Lexeme *index = eval(cdr(id), env);
+        if (index->type != NUMBER) {
+            fatalError("Array indicies must be numbers\n");
+        }
+        if (index->ival < 0 || index->ival >= arr->ival) {
+            fatalError("Array index out of bounds: %d\n", index->ival);
+        }
+        arr->arr[index->ival] = val;
     } else {
         updateEnv(env, id, val);
     }
@@ -282,6 +298,21 @@ Lexeme *evalDot(Lexeme *pt, Lexeme *env) {
 
     fatalError("Can only use dot on environments\n");
     return NULL;
+}
+
+Lexeme *evalArrGet(Lexeme *pt, Lexeme *env) {
+    Lexeme *arr = eval(car(pt), env);
+    if (arr->type != ARRAY) {
+        fatalError("Can't access sub-element of non-array.\n");
+    }
+    Lexeme *index = eval(cdr(pt), env);
+    if (index->type != NUMBER) {
+        fatalError("Array indicies must be numbers\n");
+    }
+    if (index->ival < 0 || index->ival >= arr->ival) {
+        fatalError("Array index out of bounds: %d\n", index->ival);
+    }
+    return arr->arr[index->ival];
 }
 
 Lexeme *evalWhile(Lexeme *pt, Lexeme *env) {

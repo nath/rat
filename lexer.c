@@ -29,6 +29,12 @@ Lexeme* lex(Parser *p) {
         case '}':
             return newLexeme(CBRACE);
             break;
+        case '[':
+            return newLexeme(OBRACKET);
+            break;
+        case ']':
+            return newLexeme(CBRACKET);
+            break;
         case ',':
             return newLexeme(COMMA);
             break;
