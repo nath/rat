@@ -1,5 +1,3 @@
-include("lib.rat");
-
 def node(key, value) {
     var left = nil;
     var right = nil;

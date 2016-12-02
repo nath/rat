@@ -71,4 +71,4 @@ optIdList           : *empty*
                     | idList
 
 idList              : ID
-                    | ID idList
+                    | ID  COMMA idList

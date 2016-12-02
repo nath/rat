@@ -229,6 +229,8 @@ Lexeme *evalAssign(Lexeme *pt, Lexeme *env) {
     Lexeme *val = eval(cdr(pt), env);
     if (id->type == DOT) {
         Lexeme *obj = eval(car(id), env);
+        if (cdr(id)->type == DOT) 
+            return evalAssign(cons(ASSIGN, cdr(id), val), obj);
         updateEnv(obj, cdr(id), val);
     } else if (id->type == ARRGET) {
         Lexeme *arr = eval(car(id), env);
@@ -371,7 +373,7 @@ Lexeme *evalDot(Lexeme *pt, Lexeme *env) {
         return lookupEnv(left, cdr(pt));
     }
 
-    fatalError("Can only use dot on environments %s %d\n", left->type, left->ival);
+    fatalError("Can only use dot on environments\n");
     return NULL;
 }
 
