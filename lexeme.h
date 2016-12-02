@@ -14,6 +14,8 @@ Lexeme* newLexeme(const char *type);
 Lexeme* cons(const char *type, Lexeme *left, Lexeme *right);
 Lexeme* car(Lexeme *l);
 Lexeme* cdr(Lexeme *l);
+void setCar(Lexeme *l, Lexeme *val);
+void setCdr(Lexeme *l, Lexeme *val);
 
 void printLexeme(Lexeme *l);
 

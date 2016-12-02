@@ -40,4 +40,7 @@ extern const char *STRING;
 extern const char *NUMBER;
 extern const char *ID;
 
+extern const char *ENV;
+extern const char *TABLE;
+
 #endif

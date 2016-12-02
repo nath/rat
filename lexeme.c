@@ -25,6 +25,14 @@ Lexeme* cdr(Lexeme *l) {
     return l->right;
 }
 
+void setCar(Lexeme *l, Lexeme *val) {
+    l->left = val;
+}
+
+void setCdr(Lexeme *l, Lexeme *val) {
+    l->right = val;
+}
+
 void printLexeme(Lexeme *l) {
     if (l->type == NUMBER) {
         printf("%s %d\n", NUMBER, l->ival);

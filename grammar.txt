@@ -17,6 +17,7 @@ operator            : PLUS
                     | TIMES
                     | DIVIDE
                     | EQUALS // ==
+                    | ASSIGN // =
                     | AND
                     | OR
                     | GT

@@ -114,7 +114,9 @@ Lexeme* operator(Parser *p) {
         return match(p, DIVIDE);
     } else if (check(p, EQUALS)) {
         return match(p, EQUALS);
-    } else if (check(p, AND)) {
+    } else if (check(p, ASSIGN)) {
+        return match(p, ASSIGN);
+    }else if (check(p, AND)) {
         return match(p, AND);
     } else if (check(p, OR)) {
         return match(p, OR);
@@ -130,7 +132,7 @@ Lexeme* operator(Parser *p) {
 }
 
 int operatorPending(Parser *p) {
-    return check(p, PLUS) || check(p, MINUS) || check(p, TIMES) || check(p, DIVIDE) || check(p, EQUALS)
+    return check(p, PLUS) || check(p, MINUS) || check(p, TIMES) || check(p, DIVIDE) || check(p, EQUALS) || check(p, ASSIGN)
         || check(p, AND) || check(p, OR) || check(p, GT) || check(p, GTE) || check(p, LT) || check(p, LTE);
 }
 
