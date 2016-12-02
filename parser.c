@@ -349,7 +349,9 @@ Lexeme *idList(Parser *p) {
         match(p, COMMA);
         r = idList(p);
     }
-    return cons(ID_LIST, l, r);
+    Lexeme *ret = cons(ID_LIST, l, r);
+    ret->sval = "BLAH";
+    return ret;
 }
 
 int idListPending(Parser *p) {

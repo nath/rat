@@ -62,6 +62,8 @@ Lexeme *squeek(Lexeme *args) {
            printf("%d", arg->ival);
        } else if (arg->type == STRING) {
            printf("%s", arg->sval);
+       } else if (arg->type == NIL) {
+           printf("NIL");
        } else {
            fatalError("RuntimeError, can't print a %s\n", arg->type);
        }

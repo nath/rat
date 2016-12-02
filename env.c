@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <string.h>
 
 #include "env.h"
@@ -13,6 +14,9 @@ Lexeme *insertEnv(Lexeme *env, Lexeme *var, Lexeme *val) {
 }
 
 Lexeme *lookupEnv(Lexeme *env, Lexeme *var) {
+    if (var->type == ID_LIST) {
+        printf("WTF LOOKING UP ID LIST\n");
+    }
     while (env != NULL) {
         Lexeme *table = car(env);
         Lexeme *vars = car(table);

@@ -1,6 +1,6 @@
 include("lib.rat");
 
-def node(x) {
+def node(key, value) {
     var left = nil;
     var right = nil;
     var parent = nil;
@@ -10,10 +10,10 @@ def node(x) {
     this;
 }
 
-def tree(x) {
-    var root = node(x);
+def tree(key, value) {
+    var root = node(key, value);
     def insertAt(n, p) {
-        if (n.x < p.x) {
+        if (n.key < p.key) {
             if (p.left == nil) {
                 p.left = n;
                 n.parent = p;
@@ -30,8 +30,8 @@ def tree(x) {
         }
 
     }
-    def insert(x) {
-        var n = node(x);
+    def insert(key, value) {
+        var n = node(key, value);
         insertAt(n, root);
         insertionFixup(n);
     }
@@ -55,7 +55,7 @@ def tree(x) {
                     if ((y == p.right) & (p == par.left)) {
                         if (par == root) {
                             root = y;
-                        } else if (par = par.parent.left) {
+                        } else if (par == par.parent.left) {
                             par.parent.left = y;
                         } else {
                             par.parent.right = y;
@@ -68,7 +68,7 @@ def tree(x) {
                     } else {
                         if (par == root) {
                             root = y;
-                        } else if (par = par.parent.left) {
+                        } else if (par == par.parent.left) {
                             par.parent.left = y;
                             y.parent = par.parent;
                         } else {
@@ -87,7 +87,7 @@ def tree(x) {
                    if (p == par.left) {
                         if (par == root) {
                             root = p;
-                        } else if (par = par.parent.left) {
+                        } else if (par == par.parent.left) {
                             par.parent.left = p;
                         } else {
                             par.parent.right = p;
@@ -98,7 +98,7 @@ def tree(x) {
                     } else {
                         if (par == root) {
                             root = p;
-                        } else if (par = par.parent.left) {
+                        } else if (par == par.parent.left) {
                             par.parent.left = p;
                         } else {
                             par.parent.right = p;
@@ -130,29 +130,27 @@ def tree(x) {
         else
             p.height = p.rightHeight + 1;
     }
-    def find(x) {
+    def find(key) {
         var p = root;
-        while ((!(p == nil)) & (!(p.x == x))) {
-            if (x < p.x) {
-                squeekln(x, " < ", p.x, ", going left");
+        while ((!(p == nil)) & (!(p.key == key))) {
+            if (key < p.key) {
                 p = p.left;
             } else {
-                squeekln(x, " >= ", p.x, ", going right");
                 p = p.right;
             }
         }
         if (p == nil)
-            squeekln(x, " not in tree");
+            nil;
         else
-            squeekln("found ", x);
+            p.value;
     }
     this;
 }
 
-var t = tree(10);
-t.insert(15);
-t.insert(20);
-t.insert(12);
-t.find(11);
-t.find(12);
-
+var t = tree("apple", "red");
+t.insert("banana", "yellow");
+t.insert("grape", "purple");
+t.insert("watermelon", "green");
+squeekln(t.find("apple"));
+squeekln(t.find("grape"));
+squeekln(t.find("kiwi"));

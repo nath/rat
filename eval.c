@@ -205,6 +205,10 @@ Lexeme *evalEquals(Lexeme *pt, Lexeme *env) {
         result->ival = !strcmp(left->sval, right->sval);
         return result;
     }
+    if (left->type == ENV && right->type == ENV) {
+        result->ival = left == right;
+        return result;
+    }
 
     if (left->type == NIL) {
         result->ival = right->type == NIL;
@@ -362,6 +366,8 @@ Lexeme *evalLte(Lexeme *pt, Lexeme *env) {
 Lexeme *evalDot(Lexeme *pt, Lexeme *env) {
     Lexeme *left = eval(car(pt), env);
     if (left->type == ENV) {
+        if (cdr(pt)->type == DOT)
+            return eval(cdr(pt), left);
         return lookupEnv(left, cdr(pt));
     }
 
