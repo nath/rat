@@ -1,0 +1,6 @@
+var arr = array(4);
+arr[0] = "hello";
+arr[1] = ", ";
+arr[2] = "world!";
+arr[3] = "\n";
+squeek(arr[0], arr[1], arr[2], arr[3]);

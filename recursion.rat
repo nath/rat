@@ -1,0 +1,8 @@
+def fact(n) {
+    if (n == 0) {
+        1;
+    } else {
+        n * fact(n-1);
+    }
+}
+squeekln("factorial of 5 is ", fact(5));

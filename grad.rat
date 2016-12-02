@@ -1,0 +1,6 @@
+var string = "original";
+def delay(a, b) {
+    string = "modified";
+    squeekln("a is still \"", a, "\", but b is \"", b, "\"");
+}
+delay(string, @string);

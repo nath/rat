@@ -1,0 +1,11 @@
+def counter(n) {
+    lambda () {
+        squeekln("n is ", n);
+        n = n+1;
+    };
+}
+
+var closure = counter(1);
+closure();
+closure();
+closure();

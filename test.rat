@@ -1,7 +1,0 @@
-var arr = array(5);
-arr[0] = "hi";
-arr[1] = 2;
-arr[arr[1]] = "there";
-arr[3] = lambda () {squeekln("lambda in an array");};
-squeekln(arr[0], " ", arr[2]);
-(arr[3])();
