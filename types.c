@@ -44,6 +44,7 @@ const char *NUMBER = "NUMBER";
 const char *ID = "ID";
 const char *ARRAY = "ARRAY";
 const char *BUILTIN = "BUILTIN";
+const char *NIL = "NIL";
 
 const char *ENV = "ENV";
 const char *TABLE = "TABLE";

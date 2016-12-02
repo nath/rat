@@ -1,0 +1,40 @@
+include("lib.rat");
+
+var arr = array(5);
+arr[0] = 3;
+arr[1] = 4;
+arr[2] = 5;
+arr[3] = "+";
+arr[4] = "*";
+
+var s = stack();
+
+var i = 0;
+
+while (i < 5) {
+    var tok = arr[i];
+    if (isNumber(tok)) {
+        s.push(tok);
+    } else if (tok == "+") {
+        var a = s.pop();
+        var b = s.pop();
+        s.push(b+a);
+    } else if (tok == "-") {
+        var a = s.pop();
+        var b = s.pop();
+        s.push(b-a);
+    } else if (tok == "*") {
+        var a = s.pop();
+        var b = s.pop();
+        s.push(b*a);
+    } else if (tok == "/") {
+        var a = s.pop();
+        var b = s.pop();
+        s.push(b/a);
+    } else {
+        squeekln("Unrecognized operator ", tok);
+    }
+    i = i+1;
+}
+squeekln(s.pop());
+

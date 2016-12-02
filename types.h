@@ -46,6 +46,7 @@ extern const char *NUMBER;
 extern const char *ID;
 extern const char *ARRAY;
 extern const char *BUILTIN;
+extern const char *NIL;
 
 extern const char *ENV;
 extern const char *TABLE;

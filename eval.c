@@ -15,6 +15,9 @@ Lexeme *eval(Lexeme *pt, Lexeme *env) {
         if (!strcmp(pt->sval, "this"))
             return env;
 
+        if (!strcmp(pt->sval, "nil"))
+            return newLexeme(NIL);
+
         Lexeme *result = lookupEnv(env, pt);
         if (result->type == DELAY)
             return eval(cdr(result), car(result));
@@ -171,6 +174,16 @@ Lexeme *evalEquals(Lexeme *pt, Lexeme *env) {
         return result;
     }
 
+    if (left->type == NIL) {
+        result->ival = right->type == NIL;
+        return result;
+    }
+
+    if (right->type == NIL) {
+        result->ival = left->type == NIL;
+        return result;
+    }
+
     fatalError("Can only same types\n");
     return NULL;
 }
@@ -296,7 +309,7 @@ Lexeme *evalDot(Lexeme *pt, Lexeme *env) {
         return lookupEnv(left, cdr(pt));
     }
 
-    fatalError("Can only use dot on environments\n");
+    fatalError("Can only use dot on environments %s %d\n", left->type, left->ival);
     return NULL;
 }
 

@@ -18,6 +18,7 @@ Lexeme *squeek(Lexeme *args);
 Lexeme *squeekln(Lexeme *args);
 Lexeme *array(Lexeme *args);
 Lexeme *include(Lexeme *args);
+Lexeme *isNumber(Lexeme *args);
 
 Lexeme *globalEnv;
 
@@ -50,6 +51,7 @@ void installBuiltins(Lexeme *env) {
     installBuiltin("squeekln", squeekln, env);
     installBuiltin("array", array, env);
     installBuiltin("include", include, env);
+    installBuiltin("isNumber", isNumber, env);
 }
 
 Lexeme *squeek(Lexeme *args) {
@@ -103,4 +105,14 @@ Lexeme *include(Lexeme *args) {
     Parser *p = newParser(file->sval);
     Lexeme *pt = parse(p);
     return eval(pt, globalEnv);
+}
+
+Lexeme *isNumber(Lexeme *args) {
+    if (args == NULL || cdr(args) != NULL) {
+        fatalError("Incorrect number of arguments to array()\n");
+    }
+
+    Lexeme *result = newLexeme(NUMBER);
+    result->ival = car(args)->type == NUMBER;
+    return result;
 }

@@ -1,0 +1,31 @@
+def cons(left, right) {
+    this;
+}
+
+def car(cell) {
+    cell.left;
+}
+
+def cdr(cell) {
+    cell.right;
+}
+
+def stack() {
+    var size = 0;
+    var list = nil;
+    def push(value) {
+        size = size + 1;
+        list = cons(value, list);
+        stack;
+    }
+    def peek() {
+        car(list);
+    }
+    def pop() {
+        size = size - 1;
+        var top = peek();
+        list = cdr(list);
+        top;
+    }
+    this;
+}
