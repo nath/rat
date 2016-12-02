@@ -1,0 +1,158 @@
+include("lib.rat");
+
+def node(x) {
+    var left = nil;
+    var right = nil;
+    var parent = nil;
+    var leftHeight = 0;
+    var rightHeight = 0;
+    var height = 1;
+    this;
+}
+
+def tree(x) {
+    var root = node(x);
+    def insertAt(n, p) {
+        if (n.x < p.x) {
+            if (p.left == nil) {
+                p.left = n;
+                n.parent = p;
+            }
+            else
+                insertAt(n, p.left);
+        } else {
+            if (p.right == nil) {
+                p.right = n;
+                n.parent = p;
+            }
+            else
+                insertAt(n, p.right);
+        }
+
+    }
+    def insert(x) {
+        var n = node(x);
+        insertAt(n, root);
+        insertionFixup(n);
+    }
+    def insertionFixup(p) {
+        while (!(root == p)) {
+            if (((p == p.parent.left) & (p.parent.rightHeight > p.parent.leftHeight)) | ((p == p.parent.right) & (p.parent.leftHeight > p.parent.rightHeight))) {
+                setBalance(p.parent);
+                p = root;
+            } else if (p.parent.leftHeight == p.parent.rightHeight) {
+                setBalance(p.parent);
+                p = p.parent;
+            } else {
+                var y = nil;
+                var par = p.parent;
+                if (p.leftHeight > p.rightHeight) {
+                    y = p.left;
+                } else if (p.rightHeight > p.leftHeight) {
+                    y = p.right;
+                }
+                if ((!(y == nil)) & (((y == p.right) & (p == par.left)) | ((y == p.left) & (p == par.right)))) {
+                    if ((y == p.right) & (p == par.left)) {
+                        if (par == root) {
+                            root = y;
+                        } else if (par = par.parent.left) {
+                            par.parent.left = y;
+                        } else {
+                            par.parent.right = y;
+                        }
+                        y.parent = par.parent;
+                        y.right = p;
+                        p.parent = y;
+                        p.right = par;
+                        par.parent = p;
+                    } else {
+                        if (par == root) {
+                            root = y;
+                        } else if (par = par.parent.left) {
+                            par.parent.left = y;
+                            y.parent = par.parent;
+                        } else {
+                            par.parent.right = y;
+                        }
+                        y.parent = par.parent;
+                        y.left = p;
+                        p.parent = y;
+                        p.left = par;
+                        par.parent = p;
+                    }
+                    setBalance(p);
+                    setBalance(par);
+                    setBalance(y);
+                } else {
+                   if (p == par.left) {
+                        if (par == root) {
+                            root = p;
+                        } else if (par = par.parent.left) {
+                            par.parent.left = p;
+                        } else {
+                            par.parent.right = p;
+                        }
+                        p.parent = par.parent;
+                        p.right = par;
+                        par.parent = p;
+                    } else {
+                        if (par == root) {
+                            root = p;
+                        } else if (par = par.parent.left) {
+                            par.parent.left = p;
+                        } else {
+                            par.parent.right = p;
+                        }
+                        p.parent = par.parent;
+                        p.left = par;
+                        par.parent = p;
+                    }
+                    setBalance(p);
+                    setBalance(par);
+                }
+                p = root;
+            }
+        }
+    }
+    def setBalance(p) {
+        if (p.left == nil)
+            p.leftHeight = 0;
+        else
+            p.leftHeight = p.left.height;
+
+        if (p.right == nil)
+            p.rightHeight = 0;
+        else
+            p.rightHeight = p.right.height;
+
+        if (p.leftHeight > p.rightHeight)
+            p.height = p.leftHeight + 1;
+        else
+            p.height = p.rightHeight + 1;
+    }
+    def find(x) {
+        var p = root;
+        while ((!(p == nil)) & (!(p.x == x))) {
+            if (x < p.x) {
+                squeekln(x, " < ", p.x, ", going left");
+                p = p.left;
+            } else {
+                squeekln(x, " >= ", p.x, ", going right");
+                p = p.right;
+            }
+        }
+        if (p == nil)
+            squeekln(x, " not in tree");
+        else
+            squeekln("found ", x);
+    }
+    this;
+}
+
+var t = tree(10);
+t.insert(15);
+t.insert(20);
+t.insert(12);
+t.find(11);
+t.find(12);
+
