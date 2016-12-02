@@ -8,6 +8,7 @@ Lexeme *evalPlus(Lexeme *pt, Lexeme *env);
 Lexeme *evalMinus(Lexeme *pt, Lexeme *env);
 Lexeme *evalTimes(Lexeme *pt, Lexeme *env);
 Lexeme *evalDivide(Lexeme *pt, Lexeme *env);
+Lexeme *evalPower(Lexeme *pt, Lexeme *env);
 Lexeme *evalEquals(Lexeme *pt, Lexeme *env);
 Lexeme *evalAssign(Lexeme *pt, Lexeme *env);
 Lexeme *evalAnd(Lexeme *pt, Lexeme *env);

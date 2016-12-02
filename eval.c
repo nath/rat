@@ -36,6 +36,9 @@ Lexeme *eval(Lexeme *pt, Lexeme *env) {
     if (pt->type == DIVIDE)
         return evalDivide(pt, env);
 
+    if (pt->type == POWER)
+        return evalPower(pt, env);
+
     if (pt->type == EQUALS)
         return evalEquals(pt, env);
 
@@ -158,6 +161,35 @@ Lexeme *evalDivide(Lexeme *pt, Lexeme *env) {
     }
 
     fatalError("Can only divide numbers\n");
+    return NULL;
+}
+
+int myPow(int a, int b) {
+    if (b < 0) {
+        return 0;
+    }
+
+    if (b == 0) {
+        return 1;
+    }
+
+    if (b%2 == 0) {
+        return myPow(a*a, b/2);
+    }
+
+    return a*myPow(a, b-1);
+}
+
+Lexeme *evalPower(Lexeme *pt, Lexeme *env) {
+    Lexeme *result = newLexeme(NUMBER);
+    Lexeme *left = eval(car(pt), env);
+    Lexeme *right = eval(cdr(pt), env);
+    if (left->type == NUMBER && right->type == NUMBER) {
+        result->ival = myPow(left->ival, right->ival);
+        return result;
+    }
+
+    fatalError("Can only exponentiate numbers\n");
     return NULL;
 }
 

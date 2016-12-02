@@ -80,6 +80,12 @@ functions:
 functionsx:
 	./rat functions.rat
 
+problem:
+	cat problem.rat
+
+problemx:
+	./rat problem.rat
+
 grad:
 	cat grad.rat
 

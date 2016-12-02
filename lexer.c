@@ -53,6 +53,9 @@ Lexeme* lex(Parser *p) {
         case '/':
             return newLexeme(DIVIDE);
             break;
+        case '^':
+            return newLexeme(POWER);
+            break;
         case '&':
             return newLexeme(AND);
             break;

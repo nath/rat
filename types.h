@@ -16,6 +16,7 @@ extern const char *PLUS;
 extern const char *MINUS;
 extern const char *TIMES;
 extern const char *DIVIDE;
+extern const char *POWER;
 extern const char *EQUALS;
 extern const char *AND;
 extern const char *OR;

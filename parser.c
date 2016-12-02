@@ -115,6 +115,8 @@ Lexeme *operator(Parser *p) {
         return match(p, TIMES);
     } else if (check(p, DIVIDE)) {
         return match(p, DIVIDE);
+    } else if (check(p, POWER)) {
+        return match(p, POWER);
     } else if (check(p, EQUALS)) {
         return match(p, EQUALS);
     } else if (check(p, ASSIGN)) {
@@ -135,8 +137,8 @@ Lexeme *operator(Parser *p) {
 }
 
 int operatorPending(Parser *p) {
-    return check(p, PLUS) || check(p, MINUS) || check(p, TIMES) || check(p, DIVIDE) || check(p, EQUALS) || check(p, ASSIGN)
-        || check(p, AND) || check(p, OR) || check(p, GT) || check(p, GTE) || check(p, LT) || check(p, LTE);
+    return check(p, PLUS) || check(p, MINUS) || check(p, TIMES) || check(p, DIVIDE) || check(p, POWER) || check(p, EQUALS)
+        || check(p, ASSIGN) || check(p, AND) || check(p, OR) || check(p, GT) || check(p, GTE) || check(p, LT) || check(p, LTE);
 }
 
 Lexeme *unary(Parser *p) {

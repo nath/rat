@@ -1,17 +1,23 @@
 include("lib.rat");
 
-var arr = array(5);
+var arr = array(11);
 arr[0] = 3;
 arr[1] = 4;
 arr[2] = 5;
 arr[3] = "+";
 arr[4] = "*";
+arr[5] = 2;
+arr[6] = "^";
+arr[7] = 81;
+arr[8] = "/";
+arr[9] = 3;
+arr[10] = "-";
 
 var s = stack();
 
 var i = 0;
 
-while (i < 5) {
+while (i < 11) {
     var tok = arr[i];
     if (isNumber(tok)) {
         s.push(tok);
@@ -31,6 +37,10 @@ while (i < 5) {
         var a = s.pop();
         var b = s.pop();
         s.push(b/a);
+    } else if (tok == "^") {
+        var a = s.pop();
+        var b = s.pop();
+        s.push(b^a);
     } else {
         squeekln("Unrecognized operator ", tok);
     }

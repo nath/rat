@@ -1,5 +1,5 @@
 #include "types.h"
-const char *SYMBOLS = ";(){}[],.+-*/&|!<>\"=@";
+const char *SYMBOLS = ";(){}[],.+-*/^&|!<>\"=@";
 
 const char *SEMI = "SEMICOLON";
 const char *OPAREN = "OPEN PARENTHESIS";
@@ -14,6 +14,7 @@ const char *PLUS = "PLUS";
 const char *MINUS = "MINUS";
 const char *TIMES = "TIMES";
 const char *DIVIDE = "DIVIDE";
+const char *POWER = "POWER";
 const char *EQUALS = "EQUALS";
 const char *AND = "AND";
 const char *OR = "OR";
