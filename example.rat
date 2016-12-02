@@ -1,0 +1,9 @@
+while (5) {
+    var paws=4+3*2;
+    if ((paws <= 5) | (paws > 2)) {
+        squeek("Hello");
+        var paws = 2+1;
+    }
+    if (paws==3)
+        squeek("No braces!");
+}

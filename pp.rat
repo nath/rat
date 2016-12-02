@@ -1,0 +1,7 @@
+def square(x) {
+    x*x; # square that numba
+}
+
+while (1) {
+    squeek("hi", 5);
+}

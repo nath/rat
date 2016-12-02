@@ -1,0 +1,63 @@
+program             : statementList
+
+statementList       : statement
+                    | statement statementList
+
+statement           : expression SEMI
+                    | ifStatement
+                    | whileLoop
+                    | variableDef
+                    | functionDef
+
+expression          : unary
+                    | unary operator expression
+
+operator            : PLUS
+                    | MINUS
+                    | TIMES
+                    | DIVIDE
+                    | EQUALS // ==
+                    | AND
+                    | OR
+                    | GT
+                    | GTE
+                    | LT
+                    | LTE
+
+unary               : NUMBER
+                    | STRING
+                    | variable
+                    | OPAREN expression CPAREN
+                    | MINUS unary
+                    | NOT unary
+                    | variable args //function call
+
+variable            : ID
+                    | ID DOT variable
+
+args                : OPAREN optExpressionList CPAREN
+
+optExpressionList   : *empty*
+                    | expressionList
+
+expressionList      : expression
+                    | expression COMMA expressionList
+
+block               : OBRACE statementList CBRACE
+                    | statement
+
+conditional         : OPAREN expression CPAREN
+
+ifStatement         : IF conditional block optElse
+
+optElse             : *empty*
+                    : ELSE block
+
+whileLoop           : WHILE conditional block
+
+variableDef         : VAR variable ASSIGN expression SEMI
+
+functionDef         : DEF variable OPAREN idList CPAREN block
+
+idList              : ID
+                    | ID idList
