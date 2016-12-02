@@ -32,7 +32,8 @@ unary               : NUMBER
                     | MINUS unary
                     | NOT unary
                     | DELAY unary // @ unary
-                    | variable args //function call
+                    | OPAREN expression CPAREN args // fn call
+                    | variable args // fn call
 
 variable            : ID
                     | ID DOT variable

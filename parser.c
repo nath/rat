@@ -152,6 +152,10 @@ Lexeme *unary(Parser *p) {
         Lexeme *l = match(p, OPAREN);
         l->right = expression(p);
         match(p, CPAREN);
+        if (argsPending(p)) {
+            Lexeme *r = args(p);
+            return cons(FN_CALL, l, r);
+        }
         return l;
     } else if (check(p, MINUS)) {
         Lexeme *l = match(p, MINUS);
