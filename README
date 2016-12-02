@@ -60,3 +60,7 @@ The mathematical operators of +, -, *, /, and ^ are available and work as expect
 The boolean opererations of !, &, and | are logical not, logical and, and logical or. & and | short circuit.
 
 Comparison operators are available in <, >, <=, >=, and ==. These can compare numbers, or strings in alphabetical order.
+
+Parenthesized expressions are important for ensuring order of operations, but are also the only way to immediately call a lambda, function returned from a function, or access deeper levels of arrays without intermediate variables. For example
+(lambda () $lambdaBody)();
+($array[$row])[$col];

@@ -166,6 +166,12 @@ Lexeme *unary(Parser *p) {
             Lexeme *r = args(p);
             return cons(FN_CALL, l, r);
         }
+        if (check(p, OBRACKET)) {
+            match(p, OBRACKET);
+            Lexeme *r = unary(p);
+            match(p, CBRACKET);
+            return cons(ARRGET, l, r);
+        }
         return l;
     } else if (check(p, MINUS)) {
         Lexeme *l = match(p, MINUS);

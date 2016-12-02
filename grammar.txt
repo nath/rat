@@ -30,7 +30,8 @@ operator            : PLUS
 unary               : NUMBER
                     | STRING
                     | variable
-                    | variable OBRACKET unary CBRACKET
+                    | variable OBRACKET unary CBRACKET // array access
+                    | OPAREN expression CPAREN OBRACKET unary CBRACKET // array access
                     | OPAREN expression CPAREN
                     | MINUS unary
                     | NOT unary
