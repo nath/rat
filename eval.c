@@ -291,8 +291,12 @@ Lexeme *evalGt(Lexeme *pt, Lexeme *env) {
         result->ival = left->ival > right->ival;
         return result;
     }
+    if (left->type == STRING && right->type == STRING) {
+        result->ival = strcmp(left->sval, right->sval) > 0;
+        return result;
+    }
 
-    fatalError("Can only greater than numbers\n");
+    fatalError("Can only greater than same type\n");
     return NULL;
 }
 
@@ -304,8 +308,12 @@ Lexeme *evalLt(Lexeme *pt, Lexeme *env) {
         result->ival = left->ival < right->ival;
         return result;
     }
+    if (left->type == STRING && right->type == STRING) {
+        result->ival = strcmp(left->sval, right->sval) < 0;
+        return result;
+    }
 
-    fatalError("Can only less than numbers\n");
+    fatalError("Can only less than same type\n");
     return NULL;
 }
 
@@ -317,8 +325,12 @@ Lexeme *evalGte(Lexeme *pt, Lexeme *env) {
         result->ival = left->ival >= right->ival;
         return result;
     }
+    if (left->type == STRING && right->type == STRING) {
+        result->ival = strcmp(left->sval, right->sval) >= 0;
+        return result;
+    }
 
-    fatalError("Can only greater than equals numbers\n");
+    fatalError("Can only greater than equals same type\n");
     return NULL;
 }
 
@@ -330,8 +342,12 @@ Lexeme *evalLte(Lexeme *pt, Lexeme *env) {
         result->ival = left->ival <= right->ival;
         return result;
     }
+    if (left->type == STRING && right->type == STRING) {
+        result->ival = strcmp(left->sval, right->sval) <= 0;
+        return result;
+    }
 
-    fatalError("Can only divide numbers\n");
+    fatalError("Can only less than equals same type\n");
     return NULL;
 }
 
