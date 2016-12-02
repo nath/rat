@@ -1,0 +1,62 @@
+About rat:
+
+rat has syntax that looks like C, but with all the joys of dynamic typing and first class functions.
+
+Comments in rat start with # and continue to the end of the line
+$ is unused by rat, and instead will be used throughout this ReadMe to indicate something a rat programmer would change within their program
+
+To declare a function, use
+def funcName($parameters) {
+    $functionBody
+}
+or, create a variable and set it equal to a lambda.
+
+the function's return value will be the last thing evaluated.
+In fact, all blocks result in the last thing they evaluate, so take advantage of that as you will.
+
+Variables are declared with the syntax
+var varname = $expression;
+
+Lambdas have the syntax
+lambda ($parameters) { $lambdaBody; }
+
+To iterate, rat provides a while loop
+while ($condition) {
+    $loopBody
+}
+
+Conditionals are in the form of 
+if ($condition) {
+    $body
+}
+
+and can be followed by an else in the form of
+else {
+    $body
+}
+
+All blocks can either be multiple statements within curly braces, or a single statement, meaning that for all of the above (funcdefs, lambdas, whiles, if's, and else's), if the body is only a single statement, the braces may be omitted.
+
+Objects are available in the form of environments
+The current environment can be retrieved with the keyword "this", and any variable within an object can be assigned or retrieved with the dot operator, for example
+object.x
+The dot operator may be chained if objects contain other objects as in
+root.left.parent
+
+Arrays can be created with the array() function that accepts a single number as an argument, which is the size of the array.
+Arrays are zero based, and accessing a value less than zero or greater than or equal to the size of the array will cause an error.
+Elements of an array can be accessed with the syntax
+$array[$index]
+
+String literals are wrapped in quotes, can be multiline, and have special escaped characters \n, \\, and \" to allow for newlines, backslashes, and double quotes, respectively.
+
+String literals and integers can be printed to the console with the variadic function squeek, which returns the value of its last argument.
+squeekln operates identically, except for also printing a new line after it finished printing all of its arguments.
+
+Arguments to functions can be delayed by prepending the argument with an @.
+
+The mathematical operators of +, -, *, /, and ^ are available and work as expected, but do not respect order of operations. To ensure correct order of operations, use parentheses. - acts as both subtraction, and unary negation.
+
+The boolean opererations of !, &, and | are logical not, logical and, and logical or. & and | short circuit.
+
+Comparison operators are available in <, >, <=, >=, and ==. These can compare numbers, or strings in alphabetical order.
