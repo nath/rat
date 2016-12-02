@@ -248,9 +248,13 @@ Lexeme *evalAssign(Lexeme *pt, Lexeme *env) {
 Lexeme *evalAnd(Lexeme *pt, Lexeme *env) {
     Lexeme *result = newLexeme(NUMBER);
     Lexeme *left = eval(car(pt), env);
+    if (left->type == NUMBER && left->ival == 0) {
+        result->ival = 0;
+        return result;
+    }
     Lexeme *right = eval(cdr(pt), env);
-    if (left->type == NUMBER && right->type == NUMBER) {
-        result->ival = left->ival && right->ival;
+    if (right->type == NUMBER) {
+        result->ival = right->ival;
         return result;
     }
 
@@ -261,9 +265,13 @@ Lexeme *evalAnd(Lexeme *pt, Lexeme *env) {
 Lexeme *evalOr(Lexeme *pt, Lexeme *env) {
     Lexeme *result = newLexeme(NUMBER);
     Lexeme *left = eval(car(pt), env);
+    if (left->type == NUMBER && left->ival == 1) {
+        result->ival = 1;
+        return result;
+    }
     Lexeme *right = eval(cdr(pt), env);
-    if (left->type == NUMBER && right->type == NUMBER) {
-        result->ival = left->ival || right->ival;
+    if (right->type == NUMBER) {
+        result->ival = right->ival;
         return result;
     }
 
