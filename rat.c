@@ -11,11 +11,15 @@
 #include "prettyPrint.h"
 #include "types.h"
 
+void installBuiltin(char *name, Lexeme *(*fp)(Lexeme*), Lexeme *env);
 void installBuiltins(Lexeme *env);
 
 Lexeme *squeek(Lexeme *args);
 Lexeme *squeekln(Lexeme *args);
 Lexeme *array(Lexeme *args);
+Lexeme *include(Lexeme *args);
+
+Lexeme *globalEnv;
 
 int main(int argc, char *argv[]) {
     Parser *p = newParser(argv[1]);
@@ -26,31 +30,26 @@ int main(int argc, char *argv[]) {
         prettyPrint(pt, 0);
 
 
-    Lexeme *globalEnv = createEnv();
+    globalEnv = createEnv();
     installBuiltins(globalEnv);
     eval(pt, globalEnv);
 
     return 0;
 }
 
-void installBuiltins(Lexeme *env) {
+void installBuiltin(char *name, Lexeme *(*fp)(Lexeme*), Lexeme *env) {
     Lexeme *var = newLexeme(ID);
-    var->sval = "squeek";
+    var->sval = name;
     Lexeme *val = newLexeme(BUILTIN);
-    val->fp = squeek;
+    val->fp = fp;
     insertEnv(env, var, val);
+}
 
-    var = newLexeme(ID);
-    var->sval = "squeekln";
-    val = newLexeme(BUILTIN);
-    val->fp = squeekln;
-    insertEnv(env, var, val);
-
-    var = newLexeme(ID);
-    var->sval = "array";
-    val = newLexeme(BUILTIN);
-    val->fp = array;
-    insertEnv(env, var, val);
+void installBuiltins(Lexeme *env) {
+    installBuiltin("squeek", squeek, env);
+    installBuiltin("squeekln", squeekln, env);
+    installBuiltin("array", array, env);
+    installBuiltin("include", include, env);
 }
 
 Lexeme *squeek(Lexeme *args) {
@@ -89,4 +88,19 @@ Lexeme *array(Lexeme *args) {
     result->ival = size->ival;
     result->arr = malloc(size->ival * sizeof(Lexeme *));
     return result;
+}
+
+Lexeme *include(Lexeme *args) {
+    if (args == NULL || cdr(args) != NULL) {
+        fatalError("Incorrect number of arguments to array()\n");
+    }
+
+    Lexeme *file = car(args);
+    if (file->type != STRING) {
+        fatalError("Argument to include() must be a string\n");
+    }
+
+    Parser *p = newParser(file->sval);
+    Lexeme *pt = parse(p);
+    return eval(pt, globalEnv);
 }
