@@ -59,7 +59,10 @@ whileLoop           : WHILE conditional block
 
 variableDef         : VAR variable ASSIGN expression SEMI
 
-functionDef         : DEF variable OPAREN idList CPAREN block
+functionDef         : DEF variable OPAREN optIdList CPAREN block
+
+optIdList           : *empty*
+                    | idList
 
 idList              : ID
                     | ID idList

@@ -1,5 +1,5 @@
 def test(n) {
-    def incr(z) {
+    def incr() {
         squeekln(n);
         n = n+1;
     }
@@ -8,6 +8,6 @@ def test(n) {
 var x = test(5);
 var i = 0;
 while (i<10) {
-    x(2);
+    x();
     i = i+1;
 }

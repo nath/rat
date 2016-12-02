@@ -32,7 +32,7 @@ void advance(Parser *p) {
     p->currentLexeme = lex(p);
 }
 
-Lexeme* match(Parser *p, const char *type) {
+Lexeme *match(Parser *p, const char *type) {
     Lexeme *l = p->currentLexeme;
     matchNoAdvance(p, type);
     advance(p);
@@ -45,14 +45,14 @@ void matchNoAdvance(Parser *p, const char *type) {
     }
 }
 
-Lexeme* parse(Parser *p) {
+Lexeme *parse(Parser *p) {
     advance(p); //read in first lexeme
     Lexeme *pt = statementList(p);
     match(p, END_OF_FILE);
     return pt;
 }
 
-Lexeme* statementList(Parser *p) {
+Lexeme *statementList(Parser *p) {
     Lexeme *l, *r = NULL;
     l = statement(p);
     if (statementListPending(p)) {
@@ -65,7 +65,7 @@ int statementListPending(Parser *p) {
     return statementPending(p);
 }
 
-Lexeme* statement(Parser *p) {
+Lexeme *statement(Parser *p) {
     if (expressionPending(p)) {
         Lexeme *l = expression(p);
         match(p, SEMI);
@@ -86,7 +86,7 @@ int statementPending(Parser *p) {
         || variableDefPending(p) || functionDefPending(p);
 }
 
-Lexeme* expression(Parser *p) {
+Lexeme *expression(Parser *p) {
     Lexeme *l = unary(p);
     if (operatorPending(p)) {
         Lexeme *op, *r;
@@ -103,7 +103,7 @@ int expressionPending(Parser *p) {
     return unaryPending(p);
 }
 
-Lexeme* operator(Parser *p) {
+Lexeme *operator(Parser *p) {
     if (check(p, PLUS)) {
         return match(p, PLUS);
     } else if (check(p, MINUS)) {
@@ -136,7 +136,7 @@ int operatorPending(Parser *p) {
         || check(p, AND) || check(p, OR) || check(p, GT) || check(p, GTE) || check(p, LT) || check(p, LTE);
 }
 
-Lexeme* unary(Parser *p) {
+Lexeme *unary(Parser *p) {
     if (check(p, NUMBER)) {
         return match(p, NUMBER);
     } else if (check(p, STRING)) {
@@ -173,7 +173,7 @@ int unaryPending(Parser *p) {
         || check(p, MINUS) || check(p, NOT) || check(p, DELAY);
 }
 
-Lexeme* variable(Parser *p) {
+Lexeme *variable(Parser *p) {
     Lexeme *l = match(p, ID);
     if (check(p, DOT)) {
         Lexeme *dot, *r;
@@ -190,7 +190,7 @@ int variablePending(Parser *p) {
     return check(p, ID);
 }
 
-Lexeme* args(Parser *p) {
+Lexeme *args(Parser *p) {
     match(p, OPAREN);
     Lexeme *l = optExpressionList(p);
     match(p, CPAREN);
@@ -201,14 +201,14 @@ int argsPending(Parser *p) {
     return check(p, OPAREN);
 }
 
-Lexeme* optExpressionList(Parser *p) {
+Lexeme *optExpressionList(Parser *p) {
     if (expressionListPending(p)) {
         return expressionList(p);
     }
     return NULL;
 }
 
-Lexeme* expressionList(Parser *p) {
+Lexeme *expressionList(Parser *p) {
     Lexeme *l, *r = NULL;
     l = expression(p);
     if (check(p, COMMA)) {
@@ -222,7 +222,7 @@ int expressionListPending(Parser *p) {
     return expressionPending(p);
 }
 
-Lexeme* block(Parser *p) {
+Lexeme *block(Parser *p) {
     if (check(p, OBRACE)) {
         match(p, OBRACE);
         Lexeme *l = statementList(p);
@@ -233,14 +233,14 @@ Lexeme* block(Parser *p) {
     }
 }
 
-Lexeme* conditional(Parser *p) {
+Lexeme *conditional(Parser *p) {
     match(p, OPAREN);
     Lexeme *l = expression(p);
     match(p, CPAREN);
     return l;
 }
 
-Lexeme* ifStatement(Parser *p) {
+Lexeme *ifStatement(Parser *p) {
     Lexeme *l, *cond, *blk, *el;
     l = match(p, IF);
     cond = conditional(p);
@@ -255,7 +255,7 @@ int ifStatementPending(Parser *p) {
     return check(p, IF);
 }
 
-Lexeme* optElse(Parser *p) {
+Lexeme *optElse(Parser *p) {
     if (check(p, ELSE)) {
         match(p, ELSE);
         return block(p);
@@ -263,7 +263,7 @@ Lexeme* optElse(Parser *p) {
     return NULL;
 }
 
-Lexeme* whileLoop(Parser *p) {
+Lexeme *whileLoop(Parser *p) {
     Lexeme *l = match(p, WHILE);
     l->left = conditional(p);
     l->right = block(p);
@@ -274,7 +274,7 @@ int whileLoopPending(Parser *p) {
     return check(p, WHILE);
 }
 
-Lexeme* variableDef(Parser *p) {
+Lexeme *variableDef(Parser *p) {
     Lexeme *l = match(p, VAR);
     l->left = variable(p);
     match(p, ASSIGN);
@@ -287,12 +287,12 @@ int variableDefPending(Parser *p) {
     return check(p, VAR);
 }
 
-Lexeme* functionDef(Parser *p) {
+Lexeme *functionDef(Parser *p) {
     Lexeme *l, *r, *params, *body;
     l = match(p, DEF);
     l->left = variable(p);
     match(p, OPAREN);
-    params = idList(p);
+    params = optIdList(p);
     match(p, CPAREN);
     body = block(p);
     r = cons(CONS, params, body);
@@ -304,7 +304,14 @@ int functionDefPending(Parser *p) {
     return check(p, DEF);
 }
 
-Lexeme* idList(Parser *p) {
+Lexeme *optIdList(Parser *p) {
+    if (idListPending(p)) {
+        return idList(p);
+    }
+    return NULL;
+}
+
+Lexeme *idList(Parser *p) {
     Lexeme *l, *r = NULL;
     l = match(p, ID);
     if (check(p, COMMA)) {
