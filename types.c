@@ -37,6 +37,8 @@ const char *ID_LIST = "ID LIST";
 const char *STRING = "STRING";
 const char *NUMBER = "NUMBER";
 const char *ID = "ID";
+const char *BUILTIN = "BUILTIN";
 
 const char *ENV = "ENV";
 const char *TABLE = "TABLE";
+const char *CLOSURE = "CLOSURE";

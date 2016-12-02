@@ -1,27 +1,33 @@
-OBJS=error.o lexeme.o lexer.o parser.o types.o
-prettyPrint: $(OBJS) recognizer.c prettyPrint.c
-	gcc -Wall $(OBJS) recognizer.c prettyPrint.c -o rat
+OBJS=env.o error.o eval.o lexeme.o lexer.o parser.o prettyPrint.o types.o 
+rat: $(OBJS) rat.c
+	gcc -Wall -g $(OBJS) rat.c -o rat
 
 lex: $(OBJS) scanner.c
-	gcc -Wall $(OBJS) scanner.c -o rat
+	gcc -Wall -g $(OBJS) scanner.c -o lex
+
+env.o: env.c
+	gcc -Wall -g -c env.c
+
+eval.o: eval.c
+	gcc -Wall -g -c eval.c
 
 error.o: error.c
-	gcc -Wall -c error.c
+	gcc -Wall -g -c error.c
 
 lexeme.o: lexeme.c types.c
-	gcc -Wall -c lexeme.c
+	gcc -Wall -g -c lexeme.c
 
 lexer.o: error.c lexeme.c lexer.c parser.c types.c
-	gcc -Wall -c lexer.c
+	gcc -Wall -g -c lexer.c
 
-parser.o: error.c parser.c
-	gcc -Wall -c parser.c
+parser.o: parser.c
+	gcc -Wall -g -c parser.c
 
-scanner.o: error.c lexeme.c lexer.c parser.c types.c
-	gcc -Wall -c scanner.c
+prettyPrint.o: prettyPrint.c
+	gcc -Wall -g -c prettyPrint.c
 
 types.o: types.c
-	gcc -Wall -c types.c
+	gcc -Wall -g -c types.c
 
 clean:
 	rm *.o rat

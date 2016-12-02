@@ -7,6 +7,8 @@ typedef struct Lexeme {
     char *sval;
     int ival;
 
+    struct Lexeme *(*fp)(struct Lexeme *);
+
     struct Lexeme *left, *right;
 } Lexeme;
 

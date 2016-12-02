@@ -39,8 +39,10 @@ extern const char *ID_LIST;
 extern const char *STRING;
 extern const char *NUMBER;
 extern const char *ID;
+extern const char *BUILTIN;
 
 extern const char *ENV;
 extern const char *TABLE;
+extern const char *CLOSURE;
 
 #endif
